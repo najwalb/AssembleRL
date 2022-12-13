@@ -22,7 +22,7 @@ parser.add_argument("-r", "--reward", type=str, choices=reward_type_list, help="
 parser.add_argument("--max_ep_length", type=int, default=10, help="maximum episode length")
 parser.add_argument("--points_threshold", type=float, default=0.015, help="distance threshold for Incorrectness Measure")
 parser.add_argument("--lr", type=float, default=6e-4, help="learning rate")
-parser.add_argument("--total_timesteps", type=float, default=2e5, help="number of env steps to train")
+parser.add_argument("--total_timesteps", type=float, default=1, help="number of env steps to train")
 parser.add_argument("-v", "--verbose", type=int, default=1, help="verbose parameter for model training")
 args = parser.parse_args()
 
@@ -44,7 +44,8 @@ register(
 
 eval_env = gym.make(env_name)
 eval_callback = EvalCallback(eval_env, best_model_save_path="./logs/{}-{}/".format(args.furniture, args.reward),
-                             log_path="./logs/{}-{}/".format(args.furniture, args.reward), eval_freq=1000,
+                             log_path="./logs/{}-{}/".format(args.furniture, args.reward), 
+                             eval_freq=10,
                              deterministic=True, render=False)
 
 policy_kwargs = dict(
